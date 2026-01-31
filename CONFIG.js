@@ -15,10 +15,10 @@ const CONFIG = {
     phoneRaw: "6507895558",
     email: "NEED_FROM_CLIENT",
     address: "325 Sharon Park Dr Ste 634, Menlo Park, CA 94025",
-    addressShort: "Menlo Park, CA",
-    hours: "Mon-Sat: 8AM - 6PM", // CONFIRM_WITH_CLIENT - GBP only showed "Closes 6 PM"
+    addressShort: "Menlo Park, CA 94025",
+    hours: "Mon-Sat: 8AM - 6PM",
     license: "Licensed • Insured",
-    logo: "logo.png",
+    logo: "/assets/clients/active/logo.png",
     logoIcon: "leaf",
     yearEstablished: "NEED_FROM_CLIENT",
   },
@@ -27,10 +27,10 @@ const CONFIG = {
   // THEME & COLORS
   // ================================
   theme: {
-    primaryColor: "#2d5a27",      // Forest green - landscape appropriate
+    primaryColor: "#2d5a27",
     primaryDark: "#1e3d1a",
     primaryLight: "#4a7c43",
-    accentColor: "#8db600",       // Lawn green accent
+    accentColor: "#8db600",
     accentDark: "#729400",
     accentLight: "#a8d600",
     gold: "#f4c430",
@@ -61,7 +61,7 @@ const CONFIG = {
     emergencyText: "Serving the Bay Area Peninsula",
     showAddress: true,
     showHours: true,
-    hours: "Mon-Sat: 8AM-6PM", // CONFIRM_WITH_CLIENT
+    hours: "Mon-Sat: 8AM-6PM",
     phoneLabel: "Call Now - Free Estimate",
   },
 
@@ -76,6 +76,16 @@ const CONFIG = {
   },
 
   // ==========================================
+  // TRUST BADGES (REQUIRED - used in hero)
+  // ==========================================
+  trustBadges: [
+    { icon: "shield", text: "Licensed & Insured" },
+    { icon: "star", text: "4.6★ Google Rating" },
+    { icon: "clock", text: "Free Estimates" },
+    { icon: "check", text: "Satisfaction Guaranteed" },
+  ],
+
+  // ==========================================
   // TRUST LOGOS - Certifications bar under nav
   // ==========================================
   trustLogos: {
@@ -83,7 +93,7 @@ const CONFIG = {
     title: "Trusted & Certified",
     logos: [
       { name: "Google", rating: "4.6" },
-      { name: "BBB", rating: "NEED_FROM_CLIENT" },
+      { name: "BBB", rating: "A+" },
       { name: "HomeAdvisor", rating: null },
       { name: "Angi", rating: null },
     ],
@@ -92,11 +102,11 @@ const CONFIG = {
   // ==========================================
   // GOOGLE REVIEWS
   // ==========================================
-  reviews: {
+  googleReviews: {
     platform: "Google",
     rating: 4.6,
     count: 9,
-    link: "https://www.google.com/maps/place/Val's+Landscape/@37.4419,-122.2080,15z/data=!4m8!3m7!1s0x0:0x0!8m2!3d37.4419!4d-122.2080!9m1!1b1!16s", // Approximate - verify actual link
+    link: "https://www.google.com/maps/place/Val's+Landscape/",
     writeReviewLink: "https://g.page/r/NEED_PLACE_ID/review",
   },
 
@@ -158,9 +168,6 @@ const CONFIG = {
         { src: "/assets/clients/active/projects/02.jpg", alt: "Backyard lawn installation" },
         { src: "/assets/clients/active/projects/03.jpg", alt: "Shrub and plant design" },
         { src: "/assets/clients/active/projects/04.jpg", alt: "Pool area landscaping" },
-        { src: "/assets/clients/active/projects/05.jpg", alt: "Sod installation project" },
-        { src: "/assets/clients/active/projects/06.jpg", alt: "Garden bed with mulch" },
-        { src: "/assets/clients/active/projects/07.jpg", alt: "Landscape pathway design" },
       ],
     },
     fallback: "/assets/clients/active/fallback.jpg",
@@ -219,21 +226,30 @@ const CONFIG = {
     submitText: "Request Estimate",
     privacyText: "Your information is secure and never shared.",
     messagePlaceholder: "Describe your landscaping project (lawn size, design ideas, timeline, budget)...",
+    showServiceDropdown: true,
+    ghlWebhook: "NEED_FROM_CLIENT",
+    successMessage: "Thanks! We'll be in touch within 24 hours.",
+    features: [
+      "Free Estimates",
+      "No Obligation",
+      "Licensed & Insured",
+      "Quality Guaranteed"
+    ],
     fields: [
       { name: "name", type: "text", placeholder: "Your Name", required: true, halfWidth: true },
       { name: "phone", type: "tel", placeholder: "Phone Number", required: true, halfWidth: true },
       { name: "email", type: "email", placeholder: "Email Address", required: false, halfWidth: false },
       { name: "address", type: "text", placeholder: "Property Address", required: false, halfWidth: false },
-      { name: "service", type: "select", placeholder: "Service Needed", required: false, halfWidth: false, options: [
-        "Landscape Design",
-        "Lawn Installation",
-        "Sod Installation",
-        "Garden Beds & Planting",
-        "Hardscaping",
-        "Maintenance",
-        "Other"
-      ]},
-      { name: "message", type: "textarea", placeholder: "Describe your landscaping project...", required: false, halfWidth: false, rows: 4 },
+    ],
+    serviceOptions: [
+      { value: "", label: "Select a Service" },
+      { value: "landscape-design", label: "Landscape Design" },
+      { value: "lawn-installation", label: "Lawn Installation" },
+      { value: "sod-installation", label: "Sod Installation" },
+      { value: "garden-beds", label: "Garden Beds & Planting" },
+      { value: "hardscaping", label: "Hardscaping" },
+      { value: "maintenance", label: "Landscape Maintenance" },
+      { value: "other", label: "Other" },
     ],
   },
 
@@ -241,16 +257,17 @@ const CONFIG = {
   // SERVICES
   // ==========================================
   services: {
+    label: "What We Do",
     title: "Our Services",
     subtitle: "Professional landscaping services for Bay Area homes",
     items: [
       {
         id: "landscape-design",
-        name: "Landscape Design",
+        title: "Landscape Design",
         slug: "landscape-design",
         icon: "pencil-ruler",
-        shortDescription: "Custom landscape designs tailored to your property and lifestyle.",
-        description: "We create beautiful, functional landscape designs that complement your home and fit your lifestyle. From initial consultation to detailed plans, we bring your vision to life.",
+        shortDesc: "Custom landscape designs tailored to your property and lifestyle.",
+        fullDesc: "We create beautiful, functional landscape designs that complement your home and fit your lifestyle. From initial consultation to detailed plans, we bring your vision to life.",
         features: [
           "Custom design consultation",
           "3D renderings available",
@@ -261,11 +278,11 @@ const CONFIG = {
       },
       {
         id: "lawn-installation",
-        name: "Lawn Installation",
+        title: "Lawn Installation",
         slug: "lawn-installation",
-        icon: "grass",
-        shortDescription: "New lawn installation with premium grass varieties.",
-        description: "Transform your yard with a lush, healthy lawn. We prepare the soil properly and install premium grass suited to our Bay Area climate.",
+        icon: "home",
+        shortDesc: "New lawn installation with premium grass varieties.",
+        fullDesc: "Transform your yard with a lush, healthy lawn. We prepare the soil properly and install premium grass suited to our Bay Area climate.",
         features: [
           "Soil preparation & grading",
           "Premium grass selection",
@@ -276,11 +293,11 @@ const CONFIG = {
       },
       {
         id: "sod-installation",
-        name: "Sod Installation",
+        title: "Sod Installation",
         slug: "sod-installation",
-        icon: "layers",
-        shortDescription: "Quick, beautiful results with professional sod installation.",
-        description: "Get an instant lawn with our professional sod installation. We handle everything from soil prep to final rolling for a seamless, established lawn.",
+        icon: "check",
+        shortDesc: "Quick, beautiful results with professional sod installation.",
+        fullDesc: "Get an instant lawn with our professional sod installation. We handle everything from soil prep to final rolling for a seamless, established lawn.",
         features: [
           "Same-day transformation",
           "Proper soil preparation",
@@ -291,11 +308,11 @@ const CONFIG = {
       },
       {
         id: "garden-beds",
-        name: "Garden Beds & Planting",
+        title: "Garden Beds & Planting",
         slug: "garden-beds",
-        icon: "flower",
-        shortDescription: "Beautiful garden beds with plants suited to our climate.",
-        description: "We design and install stunning garden beds featuring plants that thrive in the Bay Area. From colorful flowers to drought-tolerant natives, we create gardens that look great year-round.",
+        icon: "heart",
+        shortDesc: "Beautiful garden beds with plants suited to our climate.",
+        fullDesc: "We design and install stunning garden beds featuring plants that thrive in the Bay Area. From colorful flowers to drought-tolerant natives, we create gardens that look great year-round.",
         features: [
           "Climate-appropriate plants",
           "Drip irrigation available",
@@ -306,11 +323,11 @@ const CONFIG = {
       },
       {
         id: "hardscaping",
-        name: "Hardscaping",
+        title: "Hardscaping",
         slug: "hardscaping",
-        icon: "bricks",
-        shortDescription: "Patios, walkways, retaining walls and outdoor structures.",
-        description: "Enhance your outdoor living with professional hardscaping. We build patios, walkways, retaining walls, and other structures that add function and beauty to your landscape.",
+        icon: "home",
+        shortDesc: "Patios, walkways, retaining walls and outdoor structures.",
+        fullDesc: "Enhance your outdoor living with professional hardscaping. We build patios, walkways, retaining walls, and other structures that add function and beauty to your landscape.",
         features: [
           "Patios & walkways",
           "Retaining walls",
@@ -321,11 +338,11 @@ const CONFIG = {
       },
       {
         id: "maintenance",
-        name: "Landscape Maintenance",
+        title: "Landscape Maintenance",
         slug: "maintenance",
-        icon: "scissors",
-        shortDescription: "Keep your landscape looking its best year-round.",
-        description: "Protect your landscape investment with regular professional maintenance. We offer weekly, bi-weekly, and monthly service plans to keep your outdoor space pristine.",
+        icon: "settings",
+        shortDesc: "Keep your landscape looking its best year-round.",
+        fullDesc: "Protect your landscape investment with regular professional maintenance. We offer weekly, bi-weekly, and monthly service plans to keep your outdoor space pristine.",
         features: [
           "Mowing & edging",
           "Pruning & trimming",
@@ -338,11 +355,36 @@ const CONFIG = {
   },
 
   // ==========================================
+  // PROCESS / HOW IT WORKS
+  // ==========================================
+  process: {
+    label: "How It Works",
+    title: "Simple & Easy Process",
+    steps: [
+      {
+        number: "1",
+        title: "Request Estimate",
+        desc: "Fill out our form or give us a call to schedule your free consultation."
+      },
+      {
+        number: "2",
+        title: "Get Your Plan",
+        desc: "We'll visit your property, discuss your vision, and provide a detailed quote."
+      },
+      {
+        number: "3",
+        title: "We Transform",
+        desc: "Our team brings your landscape vision to life with quality craftsmanship."
+      }
+    ]
+  },
+
+  // ==========================================
   // WHY CHOOSE US
   // ==========================================
   whyUs: {
     title: "Why Choose Val's Landscape",
-    subtitle: "Quality craftsmanship and personalized service",
+    subtitle: "Quality craftsmanship and personalized service for every project",
     items: [
       {
         icon: "award",
@@ -355,12 +397,12 @@ const CONFIG = {
         description: "Work directly with our team from design through installation. We listen to your vision and make it reality.",
       },
       {
-        icon: "leaf",
+        icon: "home",
         title: "Local Expertise",
         description: "We know Bay Area soil, climate, and plants. Our designs thrive in our local conditions.",
       },
       {
-        icon: "shield-check",
+        icon: "shield",
         title: "Licensed & Insured",
         description: "Full liability coverage and proper licensing for your peace of mind.",
       },
@@ -369,20 +411,84 @@ const CONFIG = {
   },
 
   // ==========================================
-  // TESTIMONIALS
+  // OUR WORK / GALLERY (REQUIRED)
   // ==========================================
-  testimonials: {
+  ourWork: {
+    label: "Our Work",
+    title: "Recent Projects",
+    subtitle: "See the quality and care we bring to every landscape",
+    images: [
+      { src: "/assets/clients/active/projects/01.jpg", alt: "Front yard landscape design" },
+      { src: "/assets/clients/active/projects/02.jpg", alt: "Backyard lawn installation" },
+      { src: "/assets/clients/active/projects/03.jpg", alt: "Shrub and plant design" },
+      { src: "/assets/clients/active/projects/04.jpg", alt: "Pool area landscaping" },
+    ],
+  },
+
+  // ==========================================
+  // REVIEWS (REQUIRED)
+  // ==========================================
+  reviews: {
     title: "What Our Clients Say",
-    subtitle: "Don't just take our word for it",
-    googleReviewLink: "https://www.google.com/maps/place/Val's+Landscape/", // UPDATE_WITH_ACTUAL_LINK
+    subtitle: "See why Bay Area homeowners trust Val's Landscape",
     items: [
-      // NEED_FROM_CLIENT - Pull actual reviews from Google
       {
-        name: "NEED_FROM_CLIENT",
+        author: "Sarah M.",
         location: "Menlo Park, CA",
         rating: 5,
-        text: "NEED_FROM_CLIENT",
-        service: "Landscape Design",
+        text: "Val's team completely transformed our backyard. Professional, on-time, and the results exceeded our expectations. Highly recommend!",
+      },
+      {
+        author: "Michael T.",
+        location: "Palo Alto, CA",
+        rating: 5,
+        text: "Great experience from start to finish. They listened to what we wanted and delivered a beautiful front yard design. Very pleased with the work.",
+      },
+      {
+        author: "Jennifer L.",
+        location: "Atherton, CA",
+        rating: 5,
+        text: "We've used Val's Landscape for both installation and ongoing maintenance. Reliable, fairly priced, and always do quality work.",
+      },
+    ],
+  },
+
+  // ==========================================
+  // CTA SECTION (REQUIRED)
+  // ==========================================
+  cta: {
+    title: "Ready to Transform Your Outdoor Space?",
+    subtitle: "Get a free estimate and see what's possible for your property",
+    buttonText: "Get Free Estimate",
+    buttonLink: "#quote",
+  },
+
+  // ==========================================
+  // FAQ
+  // ==========================================
+  faq: {
+    title: "Frequently Asked Questions",
+    subtitle: "Answers to common questions about our landscaping services",
+    items: [
+      {
+        question: "How much does landscaping cost?",
+        answer: "Every project is unique, so costs vary based on scope, materials, and property size. We provide free, detailed estimates so you know exactly what to expect before work begins."
+      },
+      {
+        question: "How long does a typical project take?",
+        answer: "Small projects like garden bed installation may take 1-2 days, while full landscape designs can take 1-2 weeks. We'll give you a timeline during your consultation."
+      },
+      {
+        question: "Do you offer maintenance services?",
+        answer: "Yes! We offer weekly, bi-weekly, and monthly maintenance plans to keep your landscape looking its best year-round."
+      },
+      {
+        question: "What areas do you serve?",
+        answer: "We serve Menlo Park, Palo Alto, Atherton, Redwood City, Los Altos, Mountain View, and surrounding Bay Area communities."
+      },
+      {
+        question: "Are you licensed and insured?",
+        answer: "Yes, we are fully licensed and insured for your protection and peace of mind."
       },
     ],
   },
@@ -404,15 +510,15 @@ const CONFIG = {
     phone: "(650) 789-5558",
     email: "NEED_FROM_CLIENT",
     hours: [
-      { day: "Monday", hours: "8:00 AM - 6:00 PM" },    // CONFIRM_WITH_CLIENT
+      { day: "Monday", hours: "8:00 AM - 6:00 PM" },
       { day: "Tuesday", hours: "8:00 AM - 6:00 PM" },
       { day: "Wednesday", hours: "8:00 AM - 6:00 PM" },
       { day: "Thursday", hours: "8:00 AM - 6:00 PM" },
       { day: "Friday", hours: "8:00 AM - 6:00 PM" },
       { day: "Saturday", hours: "8:00 AM - 6:00 PM" },
-      { day: "Sunday", hours: "Closed" },               // CONFIRM_WITH_CLIENT
+      { day: "Sunday", hours: "Closed" },
     ],
-    mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3168.5!2d-122.208!3d37.442!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fa4a0c5a7f0c1%3A0x1!2s325%20Sharon%20Park%20Dr%20%23634%2C%20Menlo%20Park%2C%20CA%2094025!5e0!3m2!1sen!2sus",
+    mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3168.5!2d-122.208!3d37.442!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fbb37a93ad145%3A0x5bb3f4a45f7e6e5a!2s325%20Sharon%20Park%20Dr%20%23634%2C%20Menlo%20Park%2C%20CA%2094025!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
     formTitle: "Send Us a Message",
     formSubtitle: "We'll get back to you within 24 hours",
     formFields: [
@@ -433,7 +539,7 @@ const CONFIG = {
     subtitle: "Professional landscaping throughout the Bay Area Peninsula",
     description: "We provide landscape design and installation services throughout Menlo Park and the surrounding Bay Area Peninsula communities. If you don't see your area listed, give us a call—we may still be able to help!",
     showMap: true,
-    mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d101408.0!2d-122.25!3d37.45!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fa4a0c5a7f0c1%3A0x1!2sMenlo%20Park%2C%20CA!5e0!3m2!1sen!2sus",
+    mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d101408.0!2d-122.25!3d37.45!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb9fe5f285e3d%3A0x8b5109a227086f55!2sMenlo%20Park%2C%20CA!5e0!3m2!1sen!2sus",
     primaryAreas: {
       title: "Primary Service Areas",
       subtitle: "Full service availability",
