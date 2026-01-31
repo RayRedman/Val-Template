@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Terms of Service | Home Services</title>
+    <meta name="description" id="meta-description" content="Terms of Service">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+    <!-- PROMO BANNER -->
+    <div class="promo-banner" id="promo-banner"></div>
+
+    <!-- TOP BAR -->
+    <div class="top-bar" id="top-bar"></div>
+
+    <!-- HEADER -->
+    <header class="header" id="header"></header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu"></div>
+
+    <!-- TERMS CONTENT -->
+    <section class="legal-content" id="legal-content"></section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="footer"></footer>
+
+    <!-- Scripts -->
+    <script src="/CONFIG.js"></script>
+    <script src="/core.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Set page title
+        document.getElementById('page-title').textContent = `Terms of Service | ${CONFIG.brand.name}`;
+        document.getElementById('meta-description').setAttribute('content', `Terms of Service for ${CONFIG.brand.name}`);
+        
+        // Init common
+        initCommon('terms');
+        
+        // Render content
+        const container = document.getElementById('legal-content');
+        container.innerHTML = `
+            <div class="container">
+                <div class="legal-page">
+                    <h1>Terms of Service</h1>
+                    <p class="legal-updated">Last Updated: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    
+                    <p>By using the ${CONFIG.brand.name} website or submitting a form, you agree to the following terms.</p>
+                    
+                    <h2>Consent to Contact</h2>
+                    <p>By submitting a form on our website, you consent to be contacted by ${CONFIG.brand.name} regarding your inquiry. This may include communication via phone call, text message (SMS), or email to the contact information you provided.</p>
+                    
+                    <h2>Text Messaging</h2>
+                    <p>If you provide your phone number, you agree to receive text messages related to your service inquiry. Message frequency may vary depending on your request and our communication needs. Message and data rates may apply depending on your mobile carrier and plan.</p>
+                    
+                    <h2>Service Estimates</h2>
+                    <p>Any estimates or quotes provided are subject to change based on the actual scope of work required. Final pricing will be confirmed before work begins.</p>
+                    
+                    <h2>Limitation of Liability</h2>
+                    <p>We strive to provide accurate information on our website, but we make no guarantees regarding completeness or accuracy. ${CONFIG.brand.name} is not liable for any damages arising from your use of this website.</p>
+                    
+                    <h2>Changes to Terms</h2>
+                    <p>We may update these Terms of Service at any time. Continued use of our website constitutes acceptance of any changes.</p>
+                    
+                    <h2>Contact Us</h2>
+                    <p>If you have questions about these terms, please contact us:</p>
+                    <p><strong>Email:</strong> ${CONFIG.brand.email}<br>
+                    <strong>Phone:</strong> ${CONFIG.brand.phone}</p>
+                </div>
+            </div>
+        `;
+        
+        // Render footer
+        renderFooter();
+    });
+    </script>
+
+</body>
+</html>

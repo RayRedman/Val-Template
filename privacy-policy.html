@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Privacy Policy | Home Services</title>
+    <meta name="description" id="meta-description" content="Privacy Policy">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+    <!-- PROMO BANNER -->
+    <div class="promo-banner" id="promo-banner"></div>
+
+    <!-- TOP BAR -->
+    <div class="top-bar" id="top-bar"></div>
+
+    <!-- HEADER -->
+    <header class="header" id="header"></header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu"></div>
+
+    <!-- PRIVACY POLICY CONTENT -->
+    <section class="legal-content" id="legal-content"></section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="footer"></footer>
+
+    <!-- Scripts -->
+    <script src="/CONFIG.js"></script>
+    <script src="/core.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Set page title
+        document.getElementById('page-title').textContent = `Privacy Policy | ${CONFIG.brand.name}`;
+        document.getElementById('meta-description').setAttribute('content', `Privacy Policy for ${CONFIG.brand.name}`);
+        
+        // Init common
+        initCommon('privacy');
+        
+        // Render content
+        const container = document.getElementById('legal-content');
+        container.innerHTML = `
+            <div class="container">
+                <div class="legal-page">
+                    <h1>Privacy Policy</h1>
+                    <p class="legal-updated">Last Updated: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    
+                    <p>${CONFIG.brand.name} ("we," "us," or "our") respects your privacy. This Privacy Policy explains how we collect, use, and protect your personal information when you use our website or services.</p>
+                    
+                    <h2>Information We Collect</h2>
+                    <p>When you submit a form on our website or contact us, we may collect the following information:</p>
+                    <ul>
+                        <li>Name</li>
+                        <li>Phone number</li>
+                        <li>Email address</li>
+                        <li>Details about your service request</li>
+                    </ul>
+                    
+                    <h2>How We Use Your Information</h2>
+                    <p>We use the information you provide to:</p>
+                    <ul>
+                        <li>Respond to your inquiries</li>
+                        <li>Provide the services you requested</li>
+                        <li>Schedule appointments</li>
+                        <li>Send you information related to your service request</li>
+                    </ul>
+                    
+                    <h2>How We Protect Your Information</h2>
+                    <p>We take reasonable measures to protect your personal information from unauthorized access, use, or disclosure. Your information is stored securely and is only accessible to authorized personnel who need it to perform their duties.</p>
+                    
+                    <h2>Information Sharing</h2>
+                    <p>We do not sell, rent, or trade your personal information to third parties. We may share your information only when necessary to provide our services or when required by law.</p>
+                    
+                    <h2>Opting Out</h2>
+                    <p>If you wish to opt out of communications or request that we delete your personal information, please contact us at:</p>
+                    <p><strong>Email:</strong> ${CONFIG.brand.email}<br>
+                    <strong>Phone:</strong> ${CONFIG.brand.phone}</p>
+                    
+                    <h2>Changes to This Policy</h2>
+                    <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page.</p>
+                    
+                    <h2>Contact Us</h2>
+                    <p>If you have any questions about this Privacy Policy, please contact us at ${CONFIG.brand.email}.</p>
+                </div>
+            </div>
+        `;
+        
+        // Render footer
+        renderFooter();
+    });
+    </script>
+
+</body>
+</html>

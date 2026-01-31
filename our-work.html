@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Our Work | Home Services</title>
+    <meta name="description" id="meta-description" content="">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+    <!-- PROMO BANNER -->
+    <div class="promo-banner" id="promo-banner"></div>
+
+    <!-- TOP BAR -->
+    <div class="top-bar" id="top-bar"></div>
+
+    <!-- HEADER -->
+    <header class="header" id="header"></header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu"></div>
+
+    <!-- PAGE HERO -->
+    <section class="hero hero-short" id="hero"></section>
+
+    <!-- OUR WORK GALLERY -->
+    <section class="our-work" id="our-work"></section>
+
+    <!-- CTA -->
+    <section class="cta" id="cta"></section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="footer"></footer>
+
+    <!-- STICKY MOBILE CTA -->
+    <div class="sticky-mobile-cta" id="sticky-mobile-cta"></div>
+
+    <!-- Scripts -->
+    <script src="/CONFIG.js"></script>
+    <script src="/core.js"></script>
+    <script>
+    // ==========================================
+    // OUR WORK PAGE
+    // ==========================================
+    
+    function renderPageHero() {
+        const container = document.getElementById('hero');
+        if (!container) return;
+        
+        const bgImage = CONFIG.hero?.backgroundImage || getImage('hero');
+        
+        container.innerHTML = `
+            <div class="hero-bg"><img src="${bgImage}" alt="Our Work"></div>
+            <div class="container">
+                <div class="hero-inner">
+                    <div class="hero-content">
+                        <h1 class="hero-headline">${CONFIG.ourWork?.title || 'Our Work'}</h1>
+                        <p class="hero-subhead">${CONFIG.ourWork?.subtitle || 'See the quality and care we bring to every job.'}</p>
+                        <div class="hero-cta">
+                            <a href="#quote" class="btn btn-accent btn-lg">${CONFIG.hero.ctaPrimary.text}</a>
+                            <a href="tel:${CONFIG.brand.phoneRaw}" class="btn btn-outline-white btn-lg">${getIcon('phone')} ${CONFIG.brand.phone}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    function renderOurWorkGallery() {
+        const container = document.getElementById('our-work');
+        if (!container) return;
+        
+        // Use gallery items from CONFIG - prefer images.gallery.items, fallback to ourWork.images
+        const images = CONFIG.images?.gallery?.items || CONFIG.ourWork?.images || [];
+        
+        if (images.length === 0) {
+            container.style.display = 'none';
+            return;
+        }
+        
+        const gallery = images.map(img => `
+            <div class="work-item">
+                <img src="${img.src}" alt="${img.alt}" loading="lazy">
+                <div class="work-item-overlay">
+                    <span class="work-item-icon">${getIcon('plus')}</span>
+                </div>
+                ${img.alt ? `<div class="work-item-caption">${img.alt}</div>` : ''}
+            </div>
+        `).join('');
+        
+        container.innerHTML = `
+            <div class="container">
+                <div class="our-work-header">
+                    <div class="our-work-label">${CONFIG.ourWork?.label || 'Our Work'}</div>
+                    <h2 class="our-work-title">${CONFIG.images?.gallery?.title || CONFIG.ourWork?.title || 'Recent Projects'}</h2>
+                    <p class="our-work-subtitle">${CONFIG.images?.gallery?.subtitle || CONFIG.ourWork?.subtitle || 'See the quality and care we bring to every job.'}</p>
+                </div>
+                <div class="work-grid">${gallery}</div>
+            </div>
+        `;
+    }
+    
+    function renderStickyMobileCTA() {
+        const container = document.getElementById('sticky-mobile-cta');
+        if (!container) return;
+        
+        container.innerHTML = `
+            <div class="sticky-mobile-cta-inner">
+                <a href="tel:${CONFIG.brand.phoneRaw}" class="btn btn-call">
+                    ${ICONS.phone} ${CONFIG.ui?.callNowShort || 'Call Now'}
+                </a>
+                <a href="/index.html#quote" class="btn btn-quote">
+                    ${CONFIG.ui?.freeQuoteShort || 'Free Quote'}
+                </a>
+            </div>
+        `;
+    }
+    
+    // ==========================================
+    // INIT
+    // ==========================================
+    document.addEventListener('DOMContentLoaded', () => {
+        // Set page SEO
+        document.getElementById('page-title').textContent = `${CONFIG.ourWork?.title || 'Our Work'} | ${CONFIG.brand.name}`;
+        document.getElementById('meta-description').setAttribute('content', 
+            CONFIG.ourWork?.subtitle || `See examples of our work. ${CONFIG.brand.tagline}`
+        );
+        
+        // Init common (promo banner, top bar, header, mobile menu)
+        initCommon('ourWork');
+        
+        // Render page sections
+        renderPageHero();
+        renderOurWorkGallery();
+        renderCTA();
+        renderFooter();
+        renderStickyMobileCTA();
+    });
+    </script>
+
+</body>
+</html>

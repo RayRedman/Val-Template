@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Home Services</title>
+    <meta name="description" id="meta-description" content="">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+    <!-- PROMO BANNER -->
+    <div class="promo-banner" id="promo-banner"></div>
+
+    <!-- TOP BAR -->
+    <div class="top-bar" id="top-bar"></div>
+
+    <!-- HEADER -->
+    <header class="header" id="header"></header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu"></div>
+
+    <!-- HERO -->
+    <section class="hero" id="hero"></section>
+
+    <!-- QUOTE FORM SECTION -->
+    <section class="quote-section" id="quote-section"></section>
+
+    <!-- SERVICES -->
+    <section class="services" id="services"></section>
+
+    <!-- PROCESS / HOW IT WORKS -->
+    <section class="process" id="process"></section>
+
+    <!-- WHY US -->
+    <section class="why-us" id="why-us"></section>
+
+    <!-- OUR WORK -->
+    <section class="our-work" id="our-work"></section>
+
+    <!-- REVIEWS -->
+    <section class="reviews" id="reviews"></section>
+
+    <!-- CTA -->
+    <section class="cta" id="cta"></section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq"></section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="footer"></footer>
+
+    <!-- STICKY MOBILE CTA -->
+    <div class="sticky-mobile-cta" id="sticky-mobile-cta"></div>
+
+    <!-- Scripts -->
+    <script src="/CONFIG.js"></script>
+    <script src="/core.js"></script>
+    <script>
+    // ==========================================
+    // HOMEPAGE-SPECIFIC RENDERS
+    // ==========================================
+    
+    function renderHero() {
+        const container = document.getElementById('hero');
+        if (!container) return;
+        
+        const bgImage = CONFIG.hero.backgroundImage || getImage('hero');
+        
+        // Trust badges for hero
+        const heroBadges = CONFIG.trustBadges.slice(0, 4).map(b => `
+            <div class="hero-trust-badge">
+                <span class="hero-trust-icon">${getIcon(b.icon)}</span>
+                <span class="hero-trust-text">${b.text}</span>
+            </div>
+        `).join('');
+        
+        // Trust strip under hero (dense single line)
+        const trustStrip = CONFIG.hero.trustStrip && CONFIG.hero.trustStrip.enabled 
+            ? `<div class="hero-trust-strip">
+                <div class="container">
+                    <div class="hero-trust-strip-inner">
+                        ${CONFIG.hero.trustStrip.items.map(item => `<span class="hero-trust-strip-item">${item}</span>`).join('<span class="hero-trust-strip-divider">•</span>')}
+                    </div>
+                </div>
+            </div>`
+            : '';
+        
+        container.innerHTML = `
+            <div class="hero-bg"><img src="${bgImage}" alt="Background"></div>
+            <div class="container">
+                <div class="hero-inner">
+                    <div class="hero-content">
+                        <div class="hero-label">${CONFIG.hero.label || 'Professional Service'}</div>
+                        <h1 class="hero-headline">
+                            ${CONFIG.hero.headline}
+                            <span class="hero-headline-accent">${CONFIG.hero.headlineAccent}</span>
+                        </h1>
+                        <p class="hero-subhead">${CONFIG.hero.subhead}</p>
+                        <div class="hero-trust-row">${heroBadges}</div>
+                        <div class="hero-cta">
+                            <a href="#quote" class="btn btn-accent btn-lg">${CONFIG.hero.ctaPrimary.text}</a>
+                            <a href="tel:${CONFIG.brand.phoneRaw}" class="btn btn-outline-white btn-lg">${getIcon('phone')} ${CONFIG.brand.phone}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ${trustStrip}
+        `;
+    }
+    
+    function renderQuoteForm() {
+        const container = document.getElementById('quote-section');
+        if (!container) return;
+        
+        const serviceOptions = CONFIG.form.serviceOptions.map(o => `
+            <option value="${o.value}">${o.label}</option>
+        `).join('');
+        
+        const formFeatures = (CONFIG.form.features || [
+            "Free Estimates",
+            "Same-Day Service Available", 
+            "No Obligation",
+            "Licensed & Insured"
+        ]).map(f => `
+            <div class="quote-feature"><span class="quote-feature-icon">${getIcon('check')}</span> ${f}</div>
+        `).join('');
+        
+        container.innerHTML = `
+            <div class="container">
+                <div class="quote-section-inner">
+                    <div class="quote-section-content">
+                        <div class="quote-section-badge">
+                            ${getIcon('clock')}
+                            <span>${CONFIG.form.responseBadge || 'We Respond Within 30 Minutes'}</span>
+                        </div>
+                        <h2 class="quote-section-title">${CONFIG.form.title}</h2>
+                        <p class="quote-section-subtitle">${CONFIG.form.subtitle || 'Tell us about your project and we\'ll provide a free, no-obligation estimate.'}</p>
+                        
+                        <div class="quote-section-features">
+                            ${formFeatures}
+                        </div>
+                        
+                        <div class="quote-phone-cta">
+                            <div class="quote-phone-label">${CONFIG.form.phoneCtaLabel || 'Prefer to talk? Call us now:'}</div>
+                            <a href="tel:${CONFIG.brand.phoneRaw}" class="quote-phone-number">
+                                ${getIcon('phone')}
+                                <span>${CONFIG.brand.phone}</span>
+                            </a>
+                            <div class="quote-phone-hours">${CONFIG.brand.hours || 'Mon-Sat: 7AM - 7PM'}</div>
+                        </div>
+                    </div>
+                    <div class="quote-form-wrapper" id="quote">
+                        <div class="quote-form-header">
+                            <div class="quote-form-title">${CONFIG.form.formTitle || 'Get Your Free Quote'}</div>
+                            <div class="quote-form-subtitle">${CONFIG.form.formSubtitle || 'No spam, no hassle — just honest pricing'}</div>
+                        </div>
+                        <form class="quote-form" id="hero-form">
+                            <!-- Universal tracking fields -->
+                            <input type="hidden" name="pageType" value="home">
+                            <input type="hidden" name="pageSlug" value="home">
+                            <input type="hidden" name="companySlug" value="${CONFIG.brand.companySlug}">
+                            <input type="hidden" name="utm_source" value="${new URLSearchParams(window.location.search).get('utm_source') || ''}">
+                            <input type="hidden" name="utm_medium" value="${new URLSearchParams(window.location.search).get('utm_medium') || ''}">
+                            <input type="hidden" name="utm_campaign" value="${new URLSearchParams(window.location.search).get('utm_campaign') || ''}">
+                            <input type="hidden" name="utm_content" value="${new URLSearchParams(window.location.search).get('utm_content') || ''}">
+                            <input type="hidden" name="utm_term" value="${new URLSearchParams(window.location.search).get('utm_term') || ''}">
+                            <div class="form-row">
+                                ${CONFIG.form.fields.slice(0, 2).map(field => `
+                                    <div class="form-group">
+                                        <input type="${field.type}" name="${field.name}" class="form-input" placeholder="${field.placeholder}${field.required ? ' *' : ''}" ${field.required ? 'required' : ''}>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            ${CONFIG.form.fields.length > 2 ? CONFIG.form.fields.slice(2).map(field => `
+                                <div class="form-group">
+                                    <input type="${field.type}" name="${field.name}" class="form-input" placeholder="${field.placeholder}${field.required ? ' *' : ''}" ${field.required ? 'required' : ''}>
+                                </div>
+                            `).join('') : ''}
+                            ${CONFIG.form.showServiceDropdown !== false ? `
+                            <div class="form-group">
+                                <select name="service" class="form-select" required>
+                                    <option value="">Select Service Needed *</option>
+                                    ${serviceOptions}
+                                </select>
+                            </div>
+                            ` : ''}
+                            <div class="form-group">
+                                <textarea name="message" class="form-textarea" rows="3" placeholder="${CONFIG.form.messagePlaceholder || 'Describe the work you need done...'}"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-accent btn-block btn-lg">${CONFIG.form.submitText}</button>
+                            <div class="form-consent-text">By submitting this form, you agree to receive conversational text messages related to your inquiry. Message frequency may vary. Message and data rates may apply.</div>
+                            <div class="form-trust-badge">
+                                ${getIcon('shield')}
+                                <span>${CONFIG.form.privacyText || 'Your information is secure and never shared'}</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Setup form handler
+        setupFormHandler('hero-form', CONFIG.form.ghlWebhook, CONFIG.form.successMessage);
+    }
+    
+    function renderTrustBar() {
+        const container = document.getElementById('trust-bar');
+        if (!container) return;
+        
+        const badges = CONFIG.trustBadges.map(b => `
+            <div class="trust-bar-item">
+                <div class="trust-bar-icon">${getIcon(b.icon)}</div>
+                <span class="trust-bar-text">${b.text}</span>
+            </div>
+        `).join('');
+        
+        container.innerHTML = `
+            <div class="container">
+                <div class="trust-bar-inner">${badges}</div>
+            </div>
+        `;
+    }
+    
+    function renderServices() {
+        const container = document.getElementById('services');
+        if (!container) return;
+        
+        // Limit to 3 services for homepage
+        const serviceItems = CONFIG.services.items.slice(0, 3);
+        
+        const cards = serviceItems.map(s => {
+            const image = getImage('services', s.id) || getImage('fallback');
+            return `
+                <div class="service-card">
+                    <div class="service-card-image">
+                        <img src="${image}" alt="${s.title}" loading="lazy">
+                    </div>
+                    <div class="service-card-content">
+                        <h3 class="service-card-title">${s.title}</h3>
+                        <p class="service-card-desc">${s.shortDesc}</p>
+                        <a href="/services/${s.id}.html" class="service-card-link">Learn More ${getIcon('arrowRight')}</a>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        container.innerHTML = `
+            <div class="container">
+                <div class="services-header">
+                    <div class="services-label">${CONFIG.services.label || 'What We Do'}</div>
+                    <h2 class="services-title">${CONFIG.services.title}</h2>
+                    <p class="services-subtitle">${CONFIG.services.subtitle || 'Professional services tailored to your needs.'}</p>
+                </div>
+                <div class="services-grid">${cards}</div>
+            </div>
+        `;
+    }
+    
+    function renderProcess() {
+        const container = document.getElementById('process');
+        if (!container) return;
+        
+        // Require CONFIG.process.steps - no hardcoded fallback
+        if (!CONFIG.process?.steps) return;
+        const steps = CONFIG.process.steps;
+        
+        const stepsHTML = steps.map((step, i) => `
+            <div class="process-step">
+                <div class="process-number">${step.number}</div>
+                <h3 class="process-step-title">${step.title}</h3>
+                <p class="process-step-desc">${step.desc}</p>
+            </div>
+        `).join('');
+        
+        container.innerHTML = `
+            <div class="container">
+                <div class="process-header">
+                    <div class="process-label">${CONFIG.process?.label || 'How It Works'}</div>
+                    <h2 class="process-title">${CONFIG.process?.title || 'Simple & Easy Process'}</h2>
+                </div>
+                <div class="process-steps">${stepsHTML}</div>
+            </div>
+        `;
+    }
+    
+    function renderMidCTA() {
+        const container = document.getElementById('mid-cta');
+        if (!container) return;
+        
+        container.innerHTML = `
+            <div class="container">
+                <div class="mid-cta-inner">
+                    <h3 class="mid-cta-title">Ready to get your ${CONFIG.brand.tagline.toLowerCase().includes('detail') ? 'vehicle' : 'project'} started?</h3>
+                    <a href="${CONFIG.cta.buttonLink}" class="btn btn-white">${CONFIG.cta.buttonText} →</a>
+                </div>
+            </div>
+        `;
+    }
+    
+    function renderWhyUs() {
+        const container = document.getElementById('why-us');
+        if (!container) return;
+        
+        const image = CONFIG.whyUs.image || getImage('whyUs');
+        
+        const items = CONFIG.whyUs.items.map(item => `
+            <div class="why-us-item">
+                <div class="why-us-icon">${getIcon(item.icon)}</div>
+                <div class="why-us-content-inner">
+                    <h4 class="why-us-title">${item.title}</h4>
+                    <p class="why-us-desc">${item.description}</p>
+                </div>
+            </div>
+        `).join('');
+        
+        container.innerHTML = `
+            <div class="container">
+                <div class="why-us-wrapper">
+                    <div class="why-us-image">
+                        <img src="${image}" alt="${CONFIG.whyUs.title}">
+                    </div>
+                    <div class="why-us-content">
+                        <h2>${CONFIG.whyUs.title}</h2>
+                        <p>${CONFIG.whyUs.subtitle}</p>
+                        <div class="why-us-grid">${items}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    function renderOurWork() {
+        const container = document.getElementById('our-work');
+        if (!container) return;
+        
+        // Require CONFIG.ourWork.images - no hardcoded fallback
+        if (!CONFIG.ourWork?.images) return;
+        const images = CONFIG.ourWork.images;
+        
+        const gallery = images.map(img => `
+            <div class="work-item">
+                <img src="${img.src}" alt="${img.alt}" loading="lazy">
+                <div class="work-item-overlay">
+                    <span class="work-item-icon">${getIcon('plus')}</span>
+                </div>
+            </div>
+        `).join('');
+        
+        container.innerHTML = `
+            <div class="container">
+                <div class="our-work-header">
+                    <div class="our-work-label">${CONFIG.ourWork?.label || 'Our Work'}</div>
+                    <h2 class="our-work-title">${CONFIG.ourWork?.title || 'Recent Projects'}</h2>
+                    <p class="our-work-subtitle">${CONFIG.ourWork?.subtitle || 'See the quality and care we bring to every job.'}</p>
+                </div>
+                <div class="work-grid">${gallery}</div>
+            </div>
+        `;
+    }
+    
+    function renderReviews() {
+        const container = document.getElementById('reviews');
+        if (!container) return;
+        
+        const googleBadge = renderGoogleRatingBadge();
+        
+        const cards = CONFIG.reviews.items.map(r => {
+            const initials = r.author.split(' ').map(n => n[0]).join('');
+            const stars = getStarRating(r.rating);
+            
+            return `
+                <div class="review-card">
+                    <div class="review-stars">${stars}</div>
+                    <p class="review-text">"${r.text}"</p>
+                    <div class="review-author">
+                        ${r.avatar 
+                            ? `<img src="${r.avatar}" alt="${r.author}" class="review-avatar">` 
+                            : `<div class="review-avatar-fallback">${initials}</div>`}
+                        <div>
+                            <div class="review-name">${r.author}</div>
+                            <div class="review-location">${r.location}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        container.innerHTML = `
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">${CONFIG.reviews.title}</h2>
+                    <p class="section-subtitle">${CONFIG.reviews.subtitle}</p>
+                </div>
+                ${googleBadge}
+                <div class="reviews-grid">${cards}</div>
+            </div>
+        `;
+    }
+    
+    function renderStickyMobileCTA() {
+        const container = document.getElementById('sticky-mobile-cta');
+        if (!container) return;
+        
+        container.innerHTML = `
+            <div class="sticky-mobile-cta-inner">
+                <a href="tel:${CONFIG.brand.phoneRaw}" class="btn btn-call">
+                    ${ICONS.phone} ${CONFIG.ui?.callNowShort || 'Call Now'}
+                </a>
+                <a href="${CONFIG.hero.ctaPrimary.href}" class="btn btn-quote">
+                    ${CONFIG.ui?.freeQuoteShort || 'Free Quote'}
+                </a>
+            </div>
+        `;
+    }
+    
+    // ==========================================
+    // INIT
+    // ==========================================
+    document.addEventListener('DOMContentLoaded', () => {
+        initCommon('home');
+        renderHero();
+        renderQuoteForm();
+        renderServices();
+        renderProcess();
+        renderWhyUs();
+        renderOurWork();
+        renderReviews();
+        renderCTA();
+        renderFAQ();
+        renderFooter();
+        renderStickyMobileCTA();
+    });
+    </script>
+
+</body>
+</html>

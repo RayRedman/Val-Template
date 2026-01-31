@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Contact | Home Services</title>
+    <meta name="description" id="meta-description" content="">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+    <!-- PROMO BANNER -->
+    <div class="promo-banner" id="promo-banner"></div>
+
+    <!-- TOP BAR -->
+    <div class="top-bar" id="top-bar"></div>
+
+    <!-- HEADER -->
+    <header class="header" id="header"></header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu"></div>
+
+    <!-- CONTACT SECTION -->
+    <section class="quote-section" id="contact-section"></section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="footer"></footer>
+
+    <!-- STICKY MOBILE CTA -->
+    <div class="sticky-mobile-cta" id="sticky-mobile-cta"></div>
+
+    <!-- Scripts -->
+    <script src="/CONFIG.js"></script>
+    <script src="/core.js"></script>
+    <script>
+    // ==========================================
+    // CONTACT PAGE
+    // ==========================================
+    
+    // Get UTM parameters from URL
+    function getUTMParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+            utm_source: params.get('utm_source') || '',
+            utm_medium: params.get('utm_medium') || '',
+            utm_campaign: params.get('utm_campaign') || '',
+            utm_content: params.get('utm_content') || '',
+            utm_term: params.get('utm_term') || ''
+        };
+    }
+    
+    function renderContactSection() {
+        const container = document.getElementById('contact-section');
+        if (!container) return;
+        
+        const utmParams = getUTMParams();
+        
+        const serviceOptions = CONFIG.form.serviceOptions.map(o => {
+            return `<option value="${o.value}">${o.label}</option>`;
+        }).join('');
+        
+        const formFeatures = (CONFIG.form.features || [
+            "Free Estimates",
+            "Same-Day Service Available", 
+            "No Obligation",
+            "Licensed & Insured"
+        ]).map(f => `
+            <div class="quote-feature"><span class="quote-feature-icon">${getIcon('check')}</span> ${f}</div>
+        `).join('');
+        
+        container.innerHTML = `
+            <div class="container">
+                <div class="quote-section-inner">
+                    <div class="quote-section-content">
+                        <div class="quote-section-badge">
+                            ${getIcon('clock')}
+                            <span>${CONFIG.form.responseBadge || 'We Respond Within 30 Minutes'}</span>
+                        </div>
+                        <h1 class="quote-section-title">Contact Us</h1>
+                        <p class="quote-section-subtitle">Have a question or ready to get started? Reach out and we'll get back to you promptly.</p>
+                        
+                        <div class="quote-section-features">
+                            ${formFeatures}
+                        </div>
+                        
+                        <div class="quote-phone-cta">
+                            <div class="quote-phone-label">Prefer to talk? Call us now:</div>
+                            <a href="tel:${CONFIG.brand.phoneRaw}" class="quote-phone-number">
+                                ${getIcon('phone')}
+                                <span>${CONFIG.brand.phone}</span>
+                            </a>
+                            <div class="quote-phone-hours">${CONFIG.brand.hours || 'Mon-Sat: 7AM - 7PM'}</div>
+                        </div>
+                        
+                        <div class="contact-info-extra" style="margin-top: 1.5rem;">
+                            <div class="quote-phone-cta">
+                                <div class="quote-phone-label">Email us:</div>
+                                <a href="mailto:${CONFIG.brand.email}" class="quote-phone-number">
+                                    ${getIcon('email')}
+                                    <span>${CONFIG.brand.email}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quote-form-wrapper" id="quote">
+                        <div class="quote-form-header">
+                            <div class="quote-form-title">Send Us a Message</div>
+                            <div class="quote-form-subtitle">We'll respond within 24 hours</div>
+                        </div>
+                        <form class="quote-form" id="contact-form">
+                            <!-- Hidden fields for tracking -->
+                            <input type="hidden" name="pageType" value="contact">
+                            <input type="hidden" name="pageSlug" value="contact">
+                            <input type="hidden" name="companySlug" value="${CONFIG.brand.companySlug}">
+                            <input type="hidden" name="utm_source" value="${utmParams.utm_source}">
+                            <input type="hidden" name="utm_medium" value="${utmParams.utm_medium}">
+                            <input type="hidden" name="utm_campaign" value="${utmParams.utm_campaign}">
+                            <input type="hidden" name="utm_content" value="${utmParams.utm_content}">
+                            <input type="hidden" name="utm_term" value="${utmParams.utm_term}">
+                            
+                            <div class="form-row">
+                                ${CONFIG.form.fields.slice(0, 2).map(field => `
+                                    <div class="form-group">
+                                        <input type="${field.type}" name="${field.name}" class="form-input" placeholder="${field.placeholder}${field.required ? ' *' : ''}" ${field.required ? 'required' : ''}>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            ${CONFIG.form.fields.length > 2 ? CONFIG.form.fields.slice(2).map(field => `
+                                <div class="form-group">
+                                    <input type="${field.type}" name="${field.name}" class="form-input" placeholder="${field.placeholder}${field.required ? ' *' : ''}" ${field.required ? 'required' : ''}>
+                                </div>
+                            `).join('') : ''}
+                            ${CONFIG.form.showServiceDropdown !== false ? `
+                            <div class="form-group">
+                                <select name="service" class="form-select">
+                                    <option value="">What can we help you with?</option>
+                                    ${serviceOptions}
+                                </select>
+                            </div>
+                            ` : ''}
+                            <div class="form-group">
+                                <textarea name="message" class="form-textarea" rows="4" placeholder="Tell us about your project or question..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-accent btn-block btn-lg">Send Message</button>
+                            <div class="form-consent-text">By submitting this form, you agree to receive conversational text messages related to your inquiry. Message frequency may vary. Message and data rates may apply.</div>
+                            <div class="form-trust-badge">
+                                ${getIcon('shield')}
+                                <span>${CONFIG.form.privacyText || 'Your information is secure and never shared'}</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Setup form handler with existing function
+        setupFormHandler('contact-form', CONFIG.form.ghlWebhook, CONFIG.form.successMessage || 'Thank you for contacting us! We\'ll be in touch soon.');
+    }
+    
+    function renderStickyMobileCTA() {
+        const container = document.getElementById('sticky-mobile-cta');
+        if (!container) return;
+        
+        container.innerHTML = `
+            <div class="sticky-mobile-cta-inner">
+                <a href="tel:${CONFIG.brand.phoneRaw}" class="btn btn-call">
+                    ${ICONS.phone} ${CONFIG.ui?.callNowShort || 'Call Now'}
+                </a>
+                <a href="#quote" class="btn btn-quote">
+                    ${CONFIG.ui?.freeQuoteShort || 'Free Quote'}
+                </a>
+            </div>
+        `;
+    }
+    
+    // ==========================================
+    // INIT
+    // ==========================================
+    document.addEventListener('DOMContentLoaded', () => {
+        // Set page SEO
+        const seo = CONFIG.seo?.contact || {};
+        document.getElementById('page-title').textContent = seo.title || `Contact | ${CONFIG.brand.name}`;
+        document.getElementById('meta-description').setAttribute('content', 
+            seo.description || `Contact ${CONFIG.brand.name}. Call ${CONFIG.brand.phone} or send us a message.`
+        );
+        
+        // Init common (promo banner, top bar, header, mobile menu)
+        initCommon('contact');
+        
+        // Render page sections
+        renderContactSection();
+        renderFooter();
+        renderStickyMobileCTA();
+    });
+    </script>
+
+</body>
+</html>
